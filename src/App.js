@@ -9,15 +9,15 @@ function App() {
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png?fbclid=IwAR3oFTCKZz4TnSNrCrIbgntr5DzPvwNVWrkWbHiljDjAZ_so7GglgzQHo0A",
     desc: "Water Type",
     level: 32,
-    id: "golduck-1"
+    id: "golduck"
   };
 
   const golduck2 = {
-    name: "Golduck",
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png?fbclid=IwAR3oFTCKZz4TnSNrCrIbgntr5DzPvwNVWrkWbHiljDjAZ_so7GglgzQHo0A",
-    desc: "Water Type",
-    level: 12,
-    id: "golduck-2"
+    name: "Bulbasaur",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+    desc: "Grass Type",
+    level: 5,
+    id: "bulbasaur"
   };
 
   const [pokemonList, setPokemonList] = useState([golduck1, golduck2]);

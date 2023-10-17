@@ -8,6 +8,7 @@ function Match() {
 
   const [currentIndex, setCurrentIndex] = useState(pokemonList.length - 1);
   const [lastDirection, setLastDirection] = useState();
+
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
@@ -69,53 +70,73 @@ function Match() {
             onCardLeftScreen={() => outOfFrame(pokemon.name, index)}
             flickOnSwipe="false"
           >
-            <div
-              className="card position-relative"
-              style={{ width: 18 + "rem" }}
-            >
-              <img className="card-img-top" src={pokemon.img} alt="" />
-              <div className="card-body">
-                <h5 className="card-title">
-                  {pokemon.name} (lvl {pokemon.level})
-                </h5>
-                <p className="card-text">{pokemon.desc}</p>
-              </div>
-            </div>
+            <Card pokemon={pokemon} />
           </TinderCard>
         ))}
       </div>
       <div className="fixed-bottom text-center">
-        <div className="p-2">
-          <button
-            type="button"
-            className="btn btn-outline-danger m-2"
-            onClick={() => swipe("left")}
-          >
-            <FaTimes />
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-warning m-2"
-            onClick={() => goBack()}
-          >
-            <FaUndo />
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-success m-2"
-            onClick={() => swipe("right")}
-          >
-            <FaHeart />
-          </button>
-        </div>
-        {lastDirection ? (
-          <p key={lastDirection}>You swiped {lastDirection}</p>
-        ) : (
-          <p>
-            Swipe a card or press a button to get Restore Card button visible!
-          </p>
-        )}
+        <ActionButtons swipe={swipe} goBack={goBack} />
       </div>
+    </div>
+  );
+}
+
+function Card({ pokemon }) {
+  return (
+    <div
+      className="card position-relative shadow"
+      style={{
+        backgroundImage: `url(${pokemon.img})`,
+        width: 18 + "rem",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="card-body pt-2">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h5 className="card-title">
+          {pokemon.name} (lvl {pokemon.level})
+        </h5>
+        <p className="card-text">{pokemon.desc}</p>
+      </div>
+    </div>
+  );
+}
+
+function ActionButtons({ swipe, goBack }) {
+  return (
+    <div className="p-2">
+      <button
+        type="button"
+        className="btn btn-outline-danger m-2"
+        onClick={() => swipe("left")}
+      >
+        <FaTimes />
+      </button>
+      <button
+        type="button"
+        className="btn btn-outline-warning m-2"
+        onClick={() => goBack()}
+      >
+        <FaUndo />
+      </button>
+      <button
+        type="button"
+        className="btn btn-outline-success m-2"
+        onClick={() => swipe("right")}
+      >
+        <FaHeart />
+      </button>
     </div>
   );
 }
