@@ -14,9 +14,7 @@ root.render(
 
 export default function Index() {
   return (
-    <div className="row h-200 p-5 bg-light border rounded-3">
       <h2>Gotta <i>Match</i> Em All!</h2>
-    </div>
   );
 }
 
