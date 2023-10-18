@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, NavLink } from "react-router-dom";
 import TinderCard from "react-tinder-card";
 import { FaTimes, FaHeart, FaUndo } from "react-icons/fa";
 
@@ -65,7 +65,7 @@ function Match() {
           <TinderCard
             className="position-absolute"
             ref={childRefs[index]}
-            key={pokemon.id}
+            key={pokemon.uuid}
             onSwipe={(dir) => swiped(dir, pokemon.name, index)}
             onCardLeftScreen={() => outOfFrame(pokemon.name, index)}
             flickOnSwipe="false"
@@ -82,31 +82,29 @@ function Match() {
 }
 
 function Card({ pokemon }) {
+  const cardStyle = {
+    backgroundImage: "url('/background.png')",
+    width: 18 + "rem",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
+
+  const cardBodyStyle = {
+    backgroundImage: `url(${pokemon.img})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    paddingTop: 285 + "px",
+  };
+
   return (
-    <div
-      className="card position-relative shadow"
-      style={{
-        backgroundImage: `url(${pokemon.img})`,
-        width: 18 + "rem",
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="card-body pt-2">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <h5 className="card-title">
-          {pokemon.name} (lvl {pokemon.level})
-        </h5>
+    <div className="card position-relative shadow" style={cardStyle}>
+      <div className="card-body" style={cardBodyStyle}>
+        <NavLink className="nav-link" to={`/profile/${pokemon.uuid}`}>
+            <h3 className="border-top border-dark m-0">
+              <b>{pokemon.name}</b>
+            </h3>
+        </NavLink>
+        <p className="col-3 m-0 p-0">lvl {pokemon.level}</p>
         <p className="card-text">{pokemon.desc}</p>
       </div>
     </div>

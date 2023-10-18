@@ -3,7 +3,7 @@ import App from "./App";
 import ErrorPage from "./error";
 import Index from "./index.js";
 import Match from "./Match"
-
+import Profile from "./Profile"
 
 const router = createBrowserRouter([
   {
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "/match",
         element: <Match />,
+      },
+      {
+        path: "/profile/:uuid",
+        element: <Profile />,
       },
     ],
   },

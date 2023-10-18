@@ -4,23 +4,7 @@ import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 function App() {
-  const golduck1 = {
-    name: "Golduck",
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png?fbclid=IwAR3oFTCKZz4TnSNrCrIbgntr5DzPvwNVWrkWbHiljDjAZ_so7GglgzQHo0A",
-    desc: "Water Type",
-    level: 32,
-    id: "golduck"
-  };
-
-  const golduck2 = {
-    name: "Bulbasaur",
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-    desc: "Grass Type",
-    level: 5,
-    id: "bulbasaur"
-  };
-
-  const [pokemonList, setPokemonList] = useState([golduck1, golduck2]);
+  const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
   const context = {
     pokemonList: pokemonList,
     setPokemonList: setPokemonList,
@@ -50,5 +34,30 @@ function NavBar() {
     </ul>
   );
 }
+
+//Temp
+const golduck = {
+  name: "Golduck",
+  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png",
+  desc: "Water Type",
+  level: 32,
+  uuid: "golduck"
+};
+
+const bulbasaur = {
+  name: "Bulbasaur",
+  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+  desc: "Grass Type",
+  level: 5,
+  uuid: "bulbasaur"
+};
+
+const lileep = {
+  name: "Lileep",
+  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png",
+  desc: "Rock/Grass Type",
+  level: 25,
+  uuid: "lileep"
+};
 
 export default App;
