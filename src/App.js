@@ -3,13 +3,17 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import useReactFontLoader from "react-font-loader";
+import { Pokemon, PokemonHandler } from "./PokemonHandler";
 
 function App() {
+  var pokeH = PokemonHandler.create()
+  
+  
   useReactFontLoader({
     url: "https://fonts.googleapis.com/css2?family=Erica+One&family=Shrikhand&display=swap",
   });
 
-  const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
+  const [pokemonList, setPokemonList] = useState(pokeH.pokeList);
   const [matchList, setMatchList] = useState([]);
 
   const context = {
@@ -18,7 +22,7 @@ function App() {
     matchList: matchList,
     setMatchList: setMatchList,
   };
-
+  
   return (
     <div className="container py-4">
       <NavBar />
