@@ -7,7 +7,7 @@ import { Pokemon, PokemonHandler } from "./PokemonHandler";
 function App() {
   var pokeH = PokemonHandler.create()
   Promise.all(pokeH.pokeList)
-  console.log(pokeH.pokeList[1]['name'])
+  
   const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
   const context = {
     pokemonList: pokemonList,
