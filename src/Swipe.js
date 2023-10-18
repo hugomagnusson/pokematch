@@ -1,12 +1,11 @@
 import React, { useState, useMemo, useRef } from "react";
-import { useOutletContext, NavLink } from "react-router-dom";
+import { useOutletContext, NavLink, useLoaderData } from "react-router-dom";
 import TinderCard from "react-tinder-card";
 import { FaTimes, FaHeart } from "react-icons/fa";
 
 function Swipe() {
   const context = useOutletContext();
-  const pokemonList = context.pokemonList;
-
+  const [pokemonList, setPokemonList] = useState(useLoaderData());
   const [currentIndex, setCurrentIndex] = useState(pokemonList.length - 1);
   const currentIndexRef = useRef(currentIndex);
   const canSwipe = currentIndex >= 0;
@@ -18,7 +17,7 @@ function Swipe() {
       Array(pokemonList.length)
         .fill(0)
         .map(() => React.createRef()),
-    [pokemonList.length]
+    [pokemonList]
   );
 
   const updateCurrentIndex = (val) => {
@@ -57,7 +56,7 @@ function Swipe() {
   const removePokemon = (pokemon) => {
     const newList = pokemonList.slice();
     newList.splice(pokemonList.indexOf(pokemon));
-    context.setPokemonList(newList);
+    setPokemonList(newList);
   };
 
   return (
@@ -79,7 +78,7 @@ function Swipe() {
       </div>
       {isMatch ? <MatchPopup setMatch={setMatch} /> : <></>}
       <div className="fixed-bottom text-center">
-        <ButtonMenu swipe={swipe} />
+        <ButtonMenu swipe={swipe} pokemonList={pokemonList} />
       </div>
     </div>
   );
@@ -115,7 +114,7 @@ function Card({ pokemon }) {
   );
 }
 
-function ButtonMenu({ swipe }) {
+function ButtonMenu({ swipe, pokemonList }) {
   return (
     <div className="p-2">
       <button
@@ -132,6 +131,7 @@ function ButtonMenu({ swipe }) {
       >
         <FaHeart />
       </button>
+      {pokemonList.length}
     </div>
   );
 }

@@ -1,19 +1,15 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigation } from "react-router-dom";
 import useReactFontLoader from "react-font-loader";
-import { Pokemon, PokemonHandler } from "./PokemonHandler";
 
 function App() {
-  var pokeH = PokemonHandler.create()
-  
-  
   useReactFontLoader({
     url: "https://fonts.googleapis.com/css2?family=Erica+One&family=Shrikhand&display=swap",
   });
 
-  const [pokemonList, setPokemonList] = useState(pokeH.pokeList);
+  const [pokemonList, setPokemonList] = useState([]);
   const [matchList, setMatchList] = useState([]);
 
   const context = {
@@ -22,11 +18,11 @@ function App() {
     matchList: matchList,
     setMatchList: setMatchList,
   };
-  
+
   return (
     <div className="container py-4">
       <NavBar />
-      <Outlet context={context} />
+      {useNavigation().state === "loading" ? (<Spinner />) : (<Outlet context={context} />)}
     </div>
   );
 }
@@ -53,29 +49,14 @@ function NavBar() {
   );
 }
 
-//Temp
-const golduck = {
-  name: "Golduck",
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png",
-  desc: "Water Type",
-  level: 32,
-  uuid: "golduck",
-};
-
-const bulbasaur = {
-  name: "Bulbasaur",
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-  desc: "Grass Type",
-  level: 5,
-  uuid: "bulbasaur",
-};
-
-const lileep = {
-  name: "Lileep",
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png",
-  desc: "Rock/Grass Type",
-  level: 25,
-  uuid: "lileep",
-};
+function Spinner() {
+  return (
+    <div className="d-flex justify-content-center">
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+}
 
 export default App;
