@@ -6,9 +6,9 @@ import { Pokemon, PokemonHandler } from "./PokemonHandler";
 
 function App() {
   var pokeH = PokemonHandler.create()
-  Promise.all(pokeH.pokeList)
   
-  const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
+  
+  const [pokemonList, setPokemonList] = useState(pokeH.pokeList);
   const context = {
     pokemonList: pokemonList,
     setPokemonList: setPokemonList,
