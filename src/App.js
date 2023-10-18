@@ -2,14 +2,18 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { Pokemon, PokemonHandler } from "./PokemonHandler";
 
 function App() {
+  var pokeH = PokemonHandler.create()
+  Promise.all(pokeH.pokeList)
+  console.log(pokeH.pokeList[1]['name'])
   const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
   const context = {
     pokemonList: pokemonList,
     setPokemonList: setPokemonList,
   };
-
+  
   return (
     <div className="container py-4">
       <NavBar />
