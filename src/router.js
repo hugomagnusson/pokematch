@@ -2,8 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import ErrorPage from "./error";
 import Index from "./index.js";
-import Match from "./Match"
+import Swipe from "./Swipe"
 import Profile from "./Profile"
+import Matches from "./Matches"
 
 const router = createBrowserRouter([
   {
@@ -15,12 +16,16 @@ const router = createBrowserRouter([
         element: <Index />,
       },
       {
-        path: "/match",
-        element: <Match />,
+        path: "/swipe",
+        element: <Swipe />,
       },
       {
         path: "/profile/:uuid",
         element: <Profile />,
+      },
+      {
+        path: "/matches",
+        element: <Matches />,
       },
     ],
   },
