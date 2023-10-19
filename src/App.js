@@ -1,8 +1,10 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { useState } from "react";
-import { NavLink, Outlet, useNavigation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import useReactFontLoader from "react-font-loader";
+import { fetchPokemons } from "./apiHandler";
+import { randomIntList } from "./utils";
 
 function App() {
   useReactFontLoader({
@@ -11,6 +13,16 @@ function App() {
 
   const [pokemonList, setPokemonList] = useState([]);
   const [matchList, setMatchList] = useState([]);
+
+  useEffect(() => {
+    console.log("Effect");
+    if (pokemonList.length < 2) {
+      fetchPokemons(randomIntList(1, 1, 500)).then((list) => {
+        setPokemonList(list.concat(pokemonList));
+      });
+    }
+    console.log(pokemonList);
+  }, [pokemonList]);
 
   const context = {
     pokemonList: pokemonList,
@@ -22,7 +34,7 @@ function App() {
   return (
     <div className="container py-4">
       <NavBar />
-      {useNavigation().state === "loading" ? (<Spinner />) : (<Outlet context={context} />)}
+      <Outlet context={context} />
     </div>
   );
 }

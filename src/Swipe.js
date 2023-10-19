@@ -1,16 +1,16 @@
 import React, { useState, useMemo, useRef } from "react";
-import { useOutletContext, NavLink, useLoaderData } from "react-router-dom";
+import { useOutletContext, NavLink } from "react-router-dom";
 import TinderCard from "react-tinder-card";
 import { FaTimes, FaHeart } from "react-icons/fa";
 
 function Swipe() {
   const context = useOutletContext();
-  const [pokemonList, setPokemonList] = useState(useLoaderData());
-  const [currentIndex, setCurrentIndex] = useState(pokemonList.length - 1);
-  const currentIndexRef = useRef(currentIndex);
-  const canSwipe = currentIndex >= 0;
+  const pokemonList = context.pokemonList;
 
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const currentIndexRef = useRef(currentIndex);
   const [isMatch, setMatch] = useState(false);
+  const canSwipe = currentIndex >= 0 && !isMatch;
 
   const childRefs = useMemo(
     () =>
@@ -26,7 +26,7 @@ function Swipe() {
   };
 
   const swiped = (dir, pokemon, index) => {
-    updateCurrentIndex(index - 1);
+    updateCurrentIndex(-1);
   };
 
   const outOfFrame = (dir, pokemon, idx) => {
@@ -35,8 +35,7 @@ function Swipe() {
       currentIndexRef.current
     );
 
-    //TODO: change true to matchin algorithm
-    if (dir === "right" && true) {
+    if (dir === "right" && pokemon.isMatch()) {
       console.log(`It's a match: ${pokemon.name}`);
       const newList = context.matchList.slice();
       newList.push(pokemon);
@@ -45,6 +44,7 @@ function Swipe() {
     }
 
     removePokemon(pokemon);
+    updateCurrentIndex(1);
   };
 
   const swipe = async (dir) => {
@@ -56,12 +56,12 @@ function Swipe() {
   const removePokemon = (pokemon) => {
     const newList = pokemonList.slice();
     newList.splice(pokemonList.indexOf(pokemon));
-    setPokemonList(newList);
+    context.setPokemonList(newList);
   };
 
   return (
     <div>
-      <h1 className="text-center font-erica-one">PokeMatch</h1>
+      <h1 className="text-center font-erica-one mt-2">PokeMatch</h1>
       <div className="d-flex justify-content-center">
         {pokemonList.map((pokemon, index) => (
           <TinderCard
@@ -78,7 +78,7 @@ function Swipe() {
       </div>
       {isMatch ? <MatchPopup setMatch={setMatch} /> : <></>}
       <div className="fixed-bottom text-center">
-        <ButtonMenu swipe={swipe} pokemonList={pokemonList} />
+        <ButtonMenu swipe={swipe} pokemonList={pokemonList} currentIndex={currentIndex}/>
       </div>
     </div>
   );
@@ -108,13 +108,13 @@ function Card({ pokemon }) {
           </h3>
         </NavLink>
         <p className="col-3 m-0 p-0">lvl {pokemon.level}</p>
-        <p className="card-text">{pokemon.desc}</p>
+        <p className="card-text">{pokemon.getTypeString()}</p>
       </div>
     </div>
   );
 }
 
-function ButtonMenu({ swipe, pokemonList }) {
+function ButtonMenu({ swipe, pokemonList, currentIndex}) {
   return (
     <div className="p-2">
       <button
@@ -131,7 +131,6 @@ function ButtonMenu({ swipe, pokemonList }) {
       >
         <FaHeart />
       </button>
-      {pokemonList.length}
     </div>
   );
 }
