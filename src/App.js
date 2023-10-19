@@ -5,6 +5,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import useReactFontLoader from "react-font-loader";
 import { fetchPokemons } from "./apiHandler";
 import { randomIntList } from "./utils";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
 
 function App() {
   useReactFontLoader({
@@ -30,32 +32,32 @@ function App() {
   };
 
   return (
-    <div className="container py-4">
+    <Container className="py-4">
       <NavBar />
       <Outlet context={context} />
-    </div>
+    </Container>
   );
 }
 
 function NavBar() {
   return (
-    <ul className="nav nav-tabs">
-      <li className="nav-item">
+    <Nav variant="tabs">
+      <Nav.Item>
         <NavLink className="nav-link" to="/">
           Home
         </NavLink>
-      </li>
-      <li className="nav-item">
+      </Nav.Item>
+      <Nav.Item>
         <NavLink className="nav-link" to="/swipe">
           Swipe
         </NavLink>
-      </li>
-      <li className="nav-item">
+      </Nav.Item>
+      <Nav.Item>
         <NavLink className="nav-link" to="/matches">
           Matches
         </NavLink>
-      </li>
-    </ul>
+      </Nav.Item>
+    </Nav>
   );
 }
 
