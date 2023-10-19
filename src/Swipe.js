@@ -25,10 +25,6 @@ function Swipe() {
     currentIndexRef.current = val;
   };
 
-  const swiped = (dir, pokemon, index) => {
-    updateCurrentIndex(-1);
-  };
-
   const outOfFrame = (dir, pokemon, idx) => {
     console.log(
       `${pokemon.name} (${idx}) was swiped to the ${dir}`,
@@ -68,9 +64,8 @@ function Swipe() {
             className="position-absolute"
             ref={childRefs[index]}
             key={pokemon.uuid}
-            onSwipe={(dir) => swiped(dir, pokemon, index)}
+            onSwipe={() => updateCurrentIndex(-1)}
             onCardLeftScreen={(dir) => outOfFrame(dir, pokemon, index)}
-            flickOnSwipe="false"
           >
             <Card pokemon={pokemon} />
           </TinderCard>
@@ -78,7 +73,7 @@ function Swipe() {
       </div>
       {isMatch ? <MatchPopup setMatch={setMatch} /> : <></>}
       <div className="fixed-bottom text-center">
-        <ButtonMenu swipe={swipe} pokemonList={pokemonList} currentIndex={currentIndex}/>
+        <ButtonMenu swipe={swipe}/>
       </div>
     </div>
   );
@@ -114,7 +109,7 @@ function Card({ pokemon }) {
   );
 }
 
-function ButtonMenu({ swipe, pokemonList, currentIndex}) {
+function ButtonMenu({ swipe }) {
   return (
     <div className="p-2">
       <button
