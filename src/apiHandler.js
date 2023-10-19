@@ -6,10 +6,11 @@ async function fetchPokemons(ids) {
 
   return Promise.all(
     ids.map(async (id) => {
-      const pokemon = await safeFetchJson(
+      const pokemon = safeFetchJson(
         `https://pokeapi.co/api/v2/pokemon/${id}`
       );
-      list.push(new Pokemon(pokemon));
+      const species = safeFetchJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+      list.push(new Pokemon((await pokemon),(await species)));
     })
   ).then(() => list);
 }
@@ -25,20 +26,24 @@ async function safeFetchJson(url) {
 }
 
 class Pokemon {
-  constructor(data) {
-    this.img = data["sprites"]["other"]["official-artwork"]["front_default"];
-    this.name = capitalize(data["name"]);
-    this.number = data["id"];
-    this.heigt = data["height"];
-    this.weight = data["weight"];
-    this.level = randomInt(1, 100);
+  constructor(pokemon, species) {
+    this.img = pokemon["sprites"]["other"]["official-artwork"]["front_default"];
+    this.name = capitalize(pokemon["name"]);
+    this.number = pokemon["id"];
+    this.heigt = pokemon["height"];
+    this.weight = pokemon["weight"];
+    this.level = Math.max(1, Math.round(Math.cbrt((10*(randomInt(1,10)*randomInt(1,10)*randomInt(1,10)*randomInt(1,10)*randomInt(1,10))))));
     this.desc = "Empty";
-    this.types = Type.parseTypes(data["types"]);
+    this.types = Type.parseTypes(pokemon["types"]);
     this.uuid = uuidv4();
+    
+    this.cRate = species['capture_rate']
+    this.flavText = species['flavor_text_entries'][randomInt(0, species['flavor_text_entries'].length - 1)]['flavor_text']
+    console.log(this.flavText)
   }
 
   isMatch() {
-    return true;
+    return randomInt(0,255) - this.cRate > 0;
   }
 
   getTypeString() {
