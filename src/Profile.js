@@ -20,9 +20,10 @@ function Profile() {
       <div className="card-text border-top border-dark">
         <p>{pokemon.flavorText}</p>
         <p>Type: {pokemon.getTypeString()}</p>
-        <p>Height: {pokemon.height}</p>
-        <p>Weight: {pokemon.weight}</p>
+        <p>Height: {pokemon.getHeightString()}</p>
+        <p>Weight: {pokemon.getWeightString()}</p>
         <p>Catch Rate: {pokemon.getCaptureRateString()}</p>
+        <p>Match Chance: {pokemon.getMatchChanceString()}</p>
       </div>
     </div>
   );
