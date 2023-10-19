@@ -32,7 +32,7 @@ class Pokemon {
     this.number = pokemon["id"];
     this.heigt = pokemon["height"];
     this.weight = pokemon["weight"];
-    this.level = Math.round(Math.cbrt(pokemon["base_experience"]+(randomInt(0,1000) * randomInt(1, 100))))
+    this.level = Math.max(1, Math.round(Math.cbrt((10*(randomInt(1,10)*randomInt(1,10)*randomInt(1,10)*randomInt(1,10)*randomInt(1,10))))));
     this.desc = "Empty";
     this.types = Type.parseTypes(pokemon["types"]);
     this.uuid = uuidv4();
