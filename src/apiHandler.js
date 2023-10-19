@@ -6,11 +6,11 @@ async function fetchPokemons(ids) {
 
   return Promise.all(
     ids.map(async (id) => {
-      const pokemon = safeFetchJson(
-        `https://pokeapi.co/api/v2/pokemon/${id}`
+      const pokemon = safeFetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      const species = safeFetchJson(
+        `https://pokeapi.co/api/v2/pokemon-species/${id}`
       );
-      const species = safeFetchJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-      list.push(new Pokemon((await pokemon),(await species)));
+      list.push(new Pokemon(await pokemon, await species));
     })
   ).then(() => list);
 }
@@ -30,20 +30,40 @@ class Pokemon {
     this.img = pokemon["sprites"]["other"]["official-artwork"]["front_default"];
     this.name = capitalize(pokemon["name"]);
     this.number = pokemon["id"];
-    this.heigt = pokemon["height"];
+    this.height = pokemon["height"];
     this.weight = pokemon["weight"];
-    this.level = Math.max(1, Math.round(Math.cbrt((10*(randomInt(1,10)*randomInt(1,10)*randomInt(1,10)*randomInt(1,10)*randomInt(1,10))))));
-    this.desc = "Empty";
+    this.level = this.generateRandomLevel();
     this.types = Type.parseTypes(pokemon["types"]);
+    this.captureRate = species["capture_rate"];
+    this.flavorText =
+      species["flavor_text_entries"][
+        randomInt(0, species["flavor_text_entries"].length - 1)
+      ]["flavor_text"];
     this.uuid = uuidv4();
-    
-    this.cRate = species['capture_rate']
-    this.flavText = species['flavor_text_entries'][randomInt(0, species['flavor_text_entries'].length - 1)]['flavor_text']
-    console.log(this.flavText)
+  }
+
+  generateRandomLevel() {
+    return Math.max(
+      1,
+      Math.round(
+        Math.cbrt(
+          10 *
+            (randomInt(1, 10) *
+              randomInt(1, 10) *
+              randomInt(1, 10) *
+              randomInt(1, 10) *
+              randomInt(1, 10))
+        )
+      )
+    );
   }
 
   isMatch() {
-    return randomInt(0,255) - this.cRate > 0;
+    return randomInt(0, 255) - this.captureRate > 0;
+  }
+
+  getCaptureRateString() {
+    return Math.round((this.captureRate / 255) * 100) + "%";
   }
 
   getTypeString() {
