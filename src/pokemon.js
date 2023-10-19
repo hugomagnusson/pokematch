@@ -40,7 +40,9 @@ class Pokemon {
   }
 
   isMatch() {
-    return this.getMatchChance() - randomInt(0, 255) > 0;
+    const chance = randomInt(0, 255);
+    console.log(chance, this.getMatchChance())
+    return this.getMatchChance() - chance > 0;
   }
 
   getMatchChance() {

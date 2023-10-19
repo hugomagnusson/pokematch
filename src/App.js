@@ -15,13 +15,11 @@ function App() {
   const [matchList, setMatchList] = useState([]);
 
   useEffect(() => {
-    console.log("Effect");
     if (pokemonList.length < 2) {
       fetchPokemons(randomIntList(1, 1, 500)).then((list) => {
         setPokemonList(list.concat(pokemonList));
       });
     }
-    console.log(pokemonList);
   }, [pokemonList]);
 
   const context = {
@@ -58,16 +56,6 @@ function NavBar() {
         </NavLink>
       </li>
     </ul>
-  );
-}
-
-function Spinner() {
-  return (
-    <div className="d-flex justify-content-center">
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    </div>
   );
 }
 
