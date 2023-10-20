@@ -11,7 +11,6 @@ async function fetchPokemons(ids, minGen, maxGen, oldSprites) {
       );
       await Promise.all([pokemon, species]);
       const gen = (await species).generation.url.charAt(37);
-      console.log("gen::: " + gen);
       if (gen >= minGen && gen <= maxGen) {
         list.push(new Pokemon(await pokemon, await species, oldSprites));
       }

@@ -6,7 +6,6 @@ export default function DoubleRangeSlider(props) {
   const MIN = props.min;
   const MAX = props.max;
 
-  console.log("def val: " + props.defaultValues[0]);
 
   const [values, setValues] = useState([
     props.defaultValues[0],
@@ -18,26 +17,20 @@ export default function DoubleRangeSlider(props) {
   }, [values]);
 
   const setMinValue = (event) => {
-    console.log("set max");
-
     const val = event.target.value;
     const maxVal = values[1];
     if (val > maxVal) {
       setValues([val, val]);
-      console.log("satte MAXval. val=" + val);
     } else {
       setValues([val, maxVal]);
     }
   };
 
   const setMaxValue = (event) => {
-    console.log("set min");
-
     const val = event.target.value;
     const minVal = values[0];
     if (val < minVal) {
       setValues([val, val]);
-      console.log("satte minval. val=" + val);
     } else {
       setValues([minVal, val]);
     }

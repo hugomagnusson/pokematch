@@ -5,11 +5,12 @@ export function SettingsProvider({ children }) {
   const storedGens = JSON.parse(localStorage.getItem("gens"));
   const storedOldSprites = JSON.parse(localStorage.getItem("oldSprites"));
 
-  console.log("stored gens " + JSON.stringify(storedGens));
 
   const [gens, setGens] = useState(
-    !storedGens.minGen && !storedGens.maxGen
+    storedGens ?
+    (!storedGens.minGen && !storedGens.maxGen)
       ? { minGen: storedGens.minGen, maxGen: storedGens.maxGen }
+      : { minGen: 1, maxGen: 8 }
       : { minGen: 1, maxGen: 8 }
   );
   const [oldSprites, setOldSprites] = useState(
@@ -17,18 +18,14 @@ export function SettingsProvider({ children }) {
   );
 
   const setGensSave = (val) => {
-    console.log("set gens save");
 
-    console.log("normal" + val.maxGen);
 
-    console.log("stringified" + JSON.stringify(val));
 
     setGens(val);
     localStorage.setItem("gens", JSON.stringify(val));
   };
 
   const setOldSpritesSave = (val) => {
-    console.log("set sprites save");
     setOldSprites(val);
     localStorage.setItem("oldSprites", JSON.stringify(val));
   };
@@ -38,7 +35,6 @@ export function SettingsProvider({ children }) {
     actions: { setGensSave, setOldSpritesSave },
   };
 
-  console.log("value is: " + value.state.minGen);
 
   return (
     <SettingsContext.Provider value={value}>

@@ -9,7 +9,6 @@ const MAX = 8;
 function Settings() {
   const { state, actions } = useSettingsContext();
 
-  console.log("max GENNN " + state.maxGen);
   const [values, setValues] = useState({
     minGen: state.minGen,
     maxGen: state.maxGen,
@@ -27,11 +26,19 @@ function Settings() {
     } else {
       setSaveEnabled(true);
     }
+    if (values.minGen !== 1 || values.maxGen !== 1) {
+      setOldSpritesEnabled(false);
+    }
   }, [values, oldSpritesEnabled, state]);
 
   const handleOldModeChange = () => {
+    if (!oldSpritesEnabled) {
+      setValues({
+        minGen: 1,
+        maxGen: 1,
+      });
+    }
     setOldSpritesEnabled(!oldSpritesEnabled);
-    setValues([1, 1]);
   };
 
   const handleSaveSettings = () => {

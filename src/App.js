@@ -20,14 +20,12 @@ function App() {
 
   useEffect(() => {
     if (pokemonList.length < 2) { 
-      console.log(state.minGen);
       var intList = [];
       if (state.minGen && state.maxGen) {
         intList = randomIntList(1, (state.minGen - 1) * 78 + 1, state.maxGen * 151 < 1013 ? state.maxGen * 151 : 1013);
       } else {
         intList = randomIntList(1, 1, 1013);
       }
-      console.log(intList);
       fetchPokemons(intList,
         state.minGen, 
         state.maxGen, 
