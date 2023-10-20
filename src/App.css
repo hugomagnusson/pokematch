@@ -28,6 +28,20 @@
   color: #61dafb;
 }
 
+.font-shrikhand {
+  font-family: "Shrikhand";
+}
+
+.font-erica-one {
+  font-family: "Erica One";
+}
+
+.slider {
+  width: 100%;
+  min-height: 10px;
+  background-color: #005eff;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
