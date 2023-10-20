@@ -26,13 +26,14 @@ function Swipe() {
   };
 
   const outOfFrame = (dir, pokemon, idx) => {
-    console.log(
+    
+   /*  console.log(
       `${pokemon.name} (${idx}) was swiped to the ${dir}`,
       currentIndexRef.current
-    );
-
+    ); */
+    
     if (dir === "right" && pokemon.isMatch()) {
-      console.log(`It's a match: ${pokemon.name}`);
+      //console.log(`It's a match: ${pokemon.name}`);
       const newList = context.matchList.slice();
       newList.push(pokemon);
       context.setMatchList(newList);
@@ -136,9 +137,16 @@ function MatchPopup({ setMatch }) {
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
   };
+  const style2 = {
+    backgroundImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/480.png",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
 
   return (
     <div className="d-flex justify-content-center mt-5 pt-3">
+      
+      
       <div className="position-absolute text-end" style={style}>
         <button
           type="button"
@@ -148,12 +156,14 @@ function MatchPopup({ setMatch }) {
         >
           <FaTimes />
         </button>
+        
         <h1 className="font-shrikhand text-center mb-5 pt-2 pb-3">Gotcha!</h1>
         <h3 className="font-erica-one text-center mt-5 pt-1 px-4">
           It's a Match
         </h3>
       </div>
     </div>
+    
   );
 }
 

@@ -13,12 +13,10 @@ class Pokemon {
 
     //Number between 1 and 255, where 255 is 100 % capture rate
     this.captureRate = species["capture_rate"];
-
+    
     // Description
-    this.flavorText =
-      species["flavor_text_entries"][
-        randomInt(0, species["flavor_text_entries"].length - 1)
-      ]["flavor_text"];
+    let possibleFlavor = species["flavor_text_entries"].filter(p => p['language']['name'] === 'en');
+    this.flavorText = possibleFlavor[randomInt(0, possibleFlavor.length - 1)]["flavor_text"];
     this.uuid = uuidv4();
   }
 
@@ -41,7 +39,7 @@ class Pokemon {
 
   isMatch() {
     const chance = randomInt(0, 255);
-    console.log(chance, this.getMatchChance())
+    //console.log(chance, this.getMatchChance())
     return this.getMatchChance() - chance > 0;
   }
 
