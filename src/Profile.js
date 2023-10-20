@@ -9,6 +9,10 @@ function Profile() {
   const allPokemon = context.pokemonList.concat(context.matchList);
   const pokemon = allPokemon.find((pokemon) => pokemon.uuid === uuid);
 
+  if (!pokemon){
+    return;
+  }
+
   return (
     <Card className="mx-auto mt-5 shadow" style={{ width: 18 + "rem" }}>
       <Card.Img variant="top" src={pokemon.img}></Card.Img>
