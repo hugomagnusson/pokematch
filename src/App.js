@@ -21,13 +21,12 @@ function App() {
 
   useEffect(() => {
     if (pokemonList.length < 2) {
-      console.log(
-        state.minGen,
-        state.maxGen,
-        Pokemon.getNumberByGeneration(state.minGen - 1),
-        Pokemon.getNumberByGeneration(state.maxGen)
-      );
-      const list = randomIntList(1,Pokemon.getNumberByGeneration(state.minGen - 1),Pokemon.getNumberByGeneration(state.maxGen));
+      let list = randomIntList(1, 1, 1013);
+
+      if (state.minGen && state.maxGen){
+        list = randomIntList(1,Pokemon.getNumberByGeneration(state.minGen - 1),Pokemon.getNumberByGeneration(state.maxGen));
+      }
+
       console.log(list);
       fetchPokemons(list, state.oldSprites).then((list) => {
         setPokemonList(list.concat(pokemonList));

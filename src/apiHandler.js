@@ -6,9 +6,7 @@ async function fetchPokemons(ids, oldSprites) {
   return Promise.all(
     ids.map(async (id) => {
       const pokemon = safeFetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
-      const species = safeFetchJson(
-        `https://pokeapi.co/api/v2/pokemon-species/${id}` //37 tecken innan 4
-      );
+      const species = safeFetchJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
       list.push(new Pokemon(await pokemon, await species, oldSprites));
     })
   ).then(() => list);
