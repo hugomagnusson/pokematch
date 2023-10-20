@@ -6,6 +6,8 @@ import useReactFontLoader from "react-font-loader";
 import { fetchPokemons } from "./apiHandler";
 import { randomIntList } from "./utils";
 import { SettingsProvider } from "./SettingsProvider.js";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
 
 function App() {
   useReactFontLoader({
@@ -31,40 +33,40 @@ function App() {
   };
 
   return (
-    <div className="container py-4">
+    <Container className="py-4">
       <NavBar />
       <SettingsProvider>
         <Outlet context={context} />
       </SettingsProvider>
-    </div>
+    </Container>
   );
 }
 
 
 function NavBar() {
   return (
-    <ul className="nav nav-tabs">
-      <li className="nav-item">
+    <Nav variant="tabs">
+      <Nav.Item>
         <NavLink className="nav-link" to="/">
           Home
         </NavLink>
-      </li>
-      <li className="nav-item">
+      </Nav.Item>
+      <Nav.Item>
         <NavLink className="nav-link" to="/swipe">
           Swipe
         </NavLink>
-      </li>
-      <li className="nav-item">
+      </Nav.Item>
+      <Nav.Item>
         <NavLink className="nav-link" to="/matches">
           Matches
         </NavLink>
-      </li>
+      </Nav.Item>
       <li className="nav-item">
         <NavLink className="nav-link" to="/settings">
           Settings
         </NavLink>
       </li>
-    </ul>
+    </Nav>
   );
 }
 

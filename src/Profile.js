@@ -1,4 +1,7 @@
 import { useOutletContext, useParams } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Profile() {
   const uuid = useParams().uuid;
@@ -6,26 +9,34 @@ function Profile() {
   const allPokemon = context.pokemonList.concat(context.matchList);
   const pokemon = allPokemon.find((pokemon) => pokemon.uuid === uuid);
 
+  if (!pokemon){
+    return;
+  }
+
   return (
-    <div className="card mx-auto mt-5 shadow p-2" style={{ width: 18 + "rem" }}>
-      <img className="card-img-top border-bottom border-dark" src={pokemon.img} alt=""></img>
-      <div className="row card-title align-items-center mt-3">
-        <div className="col">
-          <h4><strong>{pokemon.name}</strong></h4>
-        </div>
-        <div className="col-3">
-        {`lvl ${pokemon.level}`}
-        </div>
-      </div>
-      <div className="card-text border-top border-dark">
-        <p>{pokemon.flavorText}</p>
-        <p>Type: {pokemon.getTypeString()}</p>
-        <p>Height: {pokemon.getHeightString()}</p>
-        <p>Weight: {pokemon.getWeightString()}</p>
-        <p>Catch Rate: {pokemon.getCaptureRateString()}</p>
-        <p>Match Chance: {pokemon.getMatchChanceString()}</p>
-      </div>
-    </div>
+    <Card className="mx-auto mt-5 shadow" style={{ width: 18 + "rem" }}>
+      <Card.Img variant="top" src={pokemon.img}></Card.Img>
+      <Card.Body className="">
+        <Card.Title className="border-top border-dark">
+          <Row className="mt-3">
+            <Col>
+              <h4>
+                <strong>{pokemon.name}</strong>
+              </h4>
+            </Col>
+            <Col className="text-end">{`lvl ${pokemon.level}`}</Col>
+          </Row>
+        </Card.Title>
+        <Card.Text className="border-top border-dark pb-2">
+          <p>{pokemon.flavorText}</p>
+          <p>Type: {pokemon.getTypeString()}</p>
+          <p>Height: {pokemon.getHeightString()}</p>
+          <p>Weight: {pokemon.getWeightString()}</p>
+          <p>Catch Rate: {pokemon.getCaptureRateString()}</p>
+          <p>Match Chance: {pokemon.getMatchChanceString()}</p>
+        </Card.Text>
+      </Card.Body>
+    </Card>
   );
 }
 

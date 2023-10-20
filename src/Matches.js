@@ -2,42 +2,55 @@ import React, { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { sortList } from "./utils";
+import ListGroup from "react-bootstrap/ListGroup";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 
 function Matches() {
   const context = useOutletContext();
   const [sort, setSort] = useState("");
 
   return (
-    <div>
+    <>
       <h1 className="text-center font-erica-one mt-2">Matches</h1>
-      <SortForm context={context} sort={sort} setSort={setSort} />
-      <div className="list-group mt-1">
+      {context.matchList.length !== 0 && (
+        <SortForm
+          context={context}
+          sort={sort}
+          setSort={setSort}
+          className="mb-5"
+        />
+      )}
+      <ListGroup className="mt-1">
         {context.matchList.map((pokemon) => (
           <ListItem pokemon={pokemon} key={pokemon.uuid} />
         ))}
-      </div>
-    </div>
+      </ListGroup>
+    </>
   );
 }
 
 function ListItem({ pokemon }) {
   return (
-    <li className="list-group-item">
+    <ListGroup.Item>
       <NavLink className="nav-link" to={`/profile/${pokemon.uuid}`}>
-        <div className="row align-items-center">
-          <div className="col-1">
-            <img
-              className="img-thumbnail-custom"
+        <Row xs="auto" className="align-items-center">
+          <Col>
+            <Image
               src={pokemon.img}
-              alt=""
-            ></img>
-          </div>
-          <div className="col-2">
-            {`${pokemon.name} (lvl ${pokemon.level})`}
-          </div>
-        </div>
+              style={{ width: 80 + "px" }}
+              roundedCircle
+              thumbnail
+            ></Image>
+          </Col>
+          <Col>
+            <h4>{`${pokemon.name} (lvl ${pokemon.level})`}</h4>
+          </Col>
+        </Row>
       </NavLink>
-    </li>
+    </ListGroup.Item>
   );
 }
 
@@ -55,18 +68,16 @@ function SortForm({ context, sort, setSort }) {
   };
 
   return (
-    <div className="form-group pb-3 col-3">
-      <select value={sort} className="form-select" onChange={sortItems}>
-        <option disabled={true} value="">
-          Sort Your Matches
+    <Form.Select value={sort} onChange={sortItems}>
+      <option disabled={true} value="">
+        Sort Your Matches
+      </option>
+      {options.map((value) => (
+        <option value={value} key={value}>
+          {value}
         </option>
-        {options.map((value) => (
-          <option value={value} key={value}>
-            {value}
-          </option>
-        ))}
-      </select>
-    </div>
+      ))}
+    </Form.Select>
   );
 }
 
