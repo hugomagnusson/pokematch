@@ -61,11 +61,11 @@ function NavBar() {
           Matches
         </NavLink>
       </Nav.Item>
-      <li className="nav-item">
+      <Nav.Item>
         <NavLink className="nav-link" to="/settings">
           Settings
         </NavLink>
-      </li>
+      </Nav.Item>
     </Nav>
   );
 }
