@@ -1,6 +1,6 @@
 import { Pokemon } from "./pokemon";
 
-async function fetchPokemons(ids, minGen, maxGen, oldSprites) {
+async function fetchPokemons(ids, oldSprites) {
   const list = [];
 
   return Promise.all(
@@ -9,12 +9,7 @@ async function fetchPokemons(ids, minGen, maxGen, oldSprites) {
       const species = safeFetchJson(
         `https://pokeapi.co/api/v2/pokemon-species/${id}` //37 tecken innan 4
       );
-      await Promise.all([pokemon, species]);
-      const gen = (await species).generation.url.charAt(37);
-      console.log("gen::: " + gen);
-      if (gen >= minGen && gen <= maxGen) {
-        list.push(new Pokemon(await pokemon, await species, oldSprites));
-      }
+      list.push(new Pokemon(await pokemon, await species, oldSprites));
     })
   ).then(() => list);
 }

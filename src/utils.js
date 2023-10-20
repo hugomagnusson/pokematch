@@ -3,7 +3,7 @@ function capitalize(name) {
 }
 
 function randomInt(min, max) {
-  return Math.floor(Math.random() * max) + min;
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function randomIntList(size, min, max) {

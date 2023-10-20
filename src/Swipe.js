@@ -29,14 +29,13 @@ function Swipe() {
   };
 
   const outOfFrame = (dir, pokemon, idx) => {
-    
-   /*  console.log(
+    console.log(
       `${pokemon.name} (${idx}) was swiped to the ${dir}`,
       currentIndexRef.current
-    ); */
-    
+    );
+
     if (dir === "right" && pokemon.isMatch()) {
-      //console.log(`It's a match: ${pokemon.name}`);
+      console.log(`It's a match: ${pokemon.name}`);
       const newList = context.matchList.slice();
       newList.push(pokemon);
       context.setMatchList(newList);
@@ -76,10 +75,13 @@ function Swipe() {
           </TinderCard>
         ))}
       </div>
-      {isMatch ? <MatchPopup setMatch={setMatch} matchName={matchedPokemon}/> : <></>}
-      {console.log(matchedPokemon)}
+      {isMatch ? (
+        <MatchPopup setMatch={setMatch} matchName={matchedPokemon} />
+      ) : (
+        <></>
+      )}
       <div className="fixed-bottom text-center">
-        <ButtonMenu swipe={swipe} className="p-2"/>
+        <ButtonMenu swipe={swipe} className="p-2" />
       </div>
     </>
   );
@@ -143,15 +145,14 @@ function MatchPopup({ setMatch, matchName }) {
     backgroundRepeat: "no-repeat",
   };
   const style2 = {
-    backgroundImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/480.png",
+    backgroundImage:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/480.png",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
   };
 
   return (
     <div className="d-flex justify-content-center mt-5 pt-3">
-      
-      
       <div className="position-absolute text-end" style={style}>
         <Button variant="outline-dark" onClick={() => setMatch(false)}>
           <FaTimes />
@@ -165,7 +166,6 @@ function MatchPopup({ setMatch, matchName }) {
         </h3>
       </div>
     </div>
-    
   );
 }
 

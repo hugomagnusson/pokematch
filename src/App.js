@@ -3,11 +3,12 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useState, createContext, useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import useReactFontLoader from "react-font-loader";
+import { Pokemon } from "./pokemon";
 import { fetchPokemons } from "./apiHandler";
 import { randomIntList } from "./utils";
 import useSettingsContext from "./useSettingsContext.js";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 
 function App() {
   useReactFontLoader({
@@ -16,23 +17,19 @@ function App() {
 
   const [pokemonList, setPokemonList] = useState([]);
   const [matchList, setMatchList] = useState([]);
-  const {state, actions} = useSettingsContext();
+  const { state, actions } = useSettingsContext();
 
   useEffect(() => {
-    if (pokemonList.length < 2) { 
-      console.log(state.minGen);
-      var intList = [];
-      if (state.minGen && state.maxGen) {
-        intList = randomIntList(1, (state.minGen - 1) * 78 + 1, state.maxGen * 151 < 1013 ? state.maxGen * 151 : 1013);
-      } else {
-        intList = randomIntList(1, 1, 1013);
-      }
-      console.log(intList);
-      fetchPokemons(intList,
-        state.minGen, 
-        state.maxGen, 
-        state.oldSprites)
-        .then((list) => {
+    if (pokemonList.length < 2) {
+      console.log(
+        state.minGen,
+        state.maxGen,
+        Pokemon.getNumberByGeneration(state.minGen - 1),
+        Pokemon.getNumberByGeneration(state.maxGen)
+      );
+      const list = randomIntList(1,Pokemon.getNumberByGeneration(state.minGen - 1),Pokemon.getNumberByGeneration(state.maxGen));
+      console.log(list);
+      fetchPokemons(list, state.oldSprites).then((list) => {
         setPokemonList(list.concat(pokemonList));
       });
     }
@@ -48,11 +45,10 @@ function App() {
   return (
     <Container className="py-4">
       <NavBar />
-        <Outlet context={context} />
+      <Outlet context={context} />
     </Container>
   );
 }
-
 
 function NavBar() {
   return (

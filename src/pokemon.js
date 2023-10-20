@@ -4,9 +4,11 @@ import { randomInt, capitalize } from "./utils";
 class Pokemon {
   constructor(pokemon, species, oldSprites) {
     console.log(pokemon["sprites"]["versions"]["generation-i"]["red-blue"]);
-    this.img = !oldSprites ? 
-      pokemon["sprites"]["other"]["official-artwork"]["front_default"] : 
-      pokemon["sprites"]["versions"]["generation-i"]["red-blue"]["front_default"];
+    this.img = !oldSprites
+      ? pokemon["sprites"]["other"]["official-artwork"]["front_default"]
+      : pokemon["sprites"]["versions"]["generation-i"]["red-blue"][
+          "front_default"
+        ];
     //https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/35.png
     this.name = capitalize(pokemon["name"]);
     this.number = pokemon["id"];
@@ -18,10 +20,13 @@ class Pokemon {
 
     //Number between 1 and 255, where 255 is 100 % capture rate
     this.captureRate = species["capture_rate"];
-    
+
     // Description
-    let possibleFlavor = species["flavor_text_entries"].filter(p => p['language']['name'] === 'en');
-    this.flavorText = possibleFlavor[randomInt(0, possibleFlavor.length - 1)]["flavor_text"];
+    let possibleFlavor = species["flavor_text_entries"].filter(
+      (p) => p["language"]["name"] === "en"
+    );
+    this.flavorText =
+      possibleFlavor[randomInt(0, possibleFlavor.length - 1)]["flavor_text"];
     this.uuid = uuidv4();
   }
 
@@ -94,6 +99,38 @@ class Pokemon {
     return this.types
       .map((type) => capitalize(type.name))
       .reduce((a, b) => a + "/" + b);
+  }
+
+  static getNumberByGeneration(generation) {
+    if (generation.toString() === '1') {
+      return 151;
+    }
+    if (generation.toString() === '2') {
+      return 251;
+    }
+    if (generation.toString() === '3') {
+      return 386;
+    }
+    if (generation.toString() === '4') {
+      return 493;
+    }
+    if (generation.toString() === '5') {
+      return 649;
+    }
+    if (generation.toString() === '6') {
+      return 721;
+    }
+    if (generation.toString() === '7') {
+      return 809;
+    }
+    if (generation.toString() === '8') {
+      return 905;
+    }
+    if (generation.toString() === '9') {
+      return 1013;
+    }
+
+    return 1;
   }
 }
 
