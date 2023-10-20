@@ -2,14 +2,19 @@ import { v4 as uuidv4 } from "uuid";
 import { randomInt, capitalize } from "./utils";
 
 class Pokemon {
-  constructor(pokemon, species) {
-    this.img = pokemon["sprites"]["other"]["official-artwork"]["front_default"];
+  constructor(pokemon, species, oldSprites) {
+    console.log(pokemon["sprites"]["versions"]["generation-i"]["red-blue"]);
+    this.img = !oldSprites ? 
+      pokemon["sprites"]["other"]["official-artwork"]["front_default"] : 
+      pokemon["sprites"]["versions"]["generation-i"]["red-blue"]["front_default"];
+    //https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/35.png
     this.name = capitalize(pokemon["name"]);
     this.number = pokemon["id"];
     this.height = pokemon["height"];
     this.weight = pokemon["weight"];
     this.level = this.generateRandomLevel();
     this.types = Type.parseTypes(pokemon["types"]);
+    this.generation = species.generation.url.charAt(37);
 
     //Number between 1 and 255, where 255 is 100 % capture rate
     this.captureRate = species["capture_rate"];

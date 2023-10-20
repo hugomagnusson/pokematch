@@ -29,8 +29,9 @@ function Settings() {
     }
   }, [values, oldSpritesEnabled, state]);
 
-  const handleLightModeChange = () => {
+  const handleOldModeChange = () => {
     setOldSpritesEnabled(!oldSpritesEnabled);
+    setValues([1, 1]);
   };
 
   const handleSaveSettings = () => {
@@ -63,7 +64,7 @@ function Settings() {
               id="lightModeSwitch"
               label={oldSpritesEnabled ? "On" : "Off"}
               checked={oldSpritesEnabled}
-              onChange={handleLightModeChange}
+              onChange={handleOldModeChange}
             />
           </Col>
         </Form.Group>

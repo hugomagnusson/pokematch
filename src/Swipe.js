@@ -10,6 +10,7 @@ function Swipe() {
   const pokemonList = context.pokemonList;
 
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [matchedPokemon, setMatchedPokemon] = useState("The Pokémon");
   const currentIndexRef = useRef(currentIndex);
   const [isMatch, setMatch] = useState(false);
   const canSwipe = currentIndex >= 0 && !isMatch;
@@ -38,6 +39,7 @@ function Swipe() {
       const newList = context.matchList.slice();
       newList.push(pokemon);
       context.setMatchList(newList);
+      setMatchedPokemon(pokemon.name);
       setMatch(true);
     }
 
@@ -73,7 +75,8 @@ function Swipe() {
           </TinderCard>
         ))}
       </div>
-      {isMatch ? <MatchPopup setMatch={setMatch} /> : <></>}
+      {isMatch ? <MatchPopup setMatch={setMatch} matchName={matchedPokemon}/> : <></>}
+      {console.log(matchedPokemon)}
       <div className="fixed-bottom text-center">
         <ButtonMenu swipe={swipe} className="p-2"/>
       </div>
@@ -132,7 +135,7 @@ function ButtonMenu({ swipe }) {
   );
 }
 
-function MatchPopup({ setMatch }) {
+function MatchPopup({ setMatch, matchName }) {
   const style = {
     backgroundImage: "url('/img/pokeball.gif')",
     backgroundSize: "cover",
@@ -148,6 +151,9 @@ function MatchPopup({ setMatch }) {
         <h1 className="font-shrikhand text-center mb-5 pt-2 pb-3">Gotcha!</h1>
         <h3 className="font-erica-one text-center mt-5 pt-1 px-4">
           It's a Match
+        </h3>
+        <h3 className="font-erica-one text-center mt-5 pt-1 px-4">
+          {matchName} likes you too!
         </h3>
       </div>
     </div>

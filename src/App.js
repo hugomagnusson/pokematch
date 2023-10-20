@@ -5,7 +5,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useReactFontLoader from "react-font-loader";
 import { fetchPokemons } from "./apiHandler";
 import { randomIntList } from "./utils";
-import { SettingsProvider } from "./SettingsProvider.js";
+import useSettingsContext from "./useSettingsContext.js";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
@@ -16,10 +16,23 @@ function App() {
 
   const [pokemonList, setPokemonList] = useState([]);
   const [matchList, setMatchList] = useState([]);
+  const {state, actions} = useSettingsContext();
 
   useEffect(() => {
-    if (pokemonList.length < 2) {
-      fetchPokemons(randomIntList(1, 1, 500)).then((list) => {
+    if (pokemonList.length < 2) { 
+      console.log(state.minGen);
+      var intList = [];
+      if (state.minGen && state.maxGen) {
+        intList = randomIntList(1, (state.minGen - 1) * 78 + 1, state.maxGen * 151 < 1013 ? state.maxGen * 151 : 1013);
+      } else {
+        intList = randomIntList(1, 1, 1013);
+      }
+      console.log(intList);
+      fetchPokemons(intList,
+        state.minGen, 
+        state.maxGen, 
+        state.oldSprites)
+        .then((list) => {
         setPokemonList(list.concat(pokemonList));
       });
     }
@@ -35,9 +48,7 @@ function App() {
   return (
     <Container className="py-4">
       <NavBar />
-      <SettingsProvider>
         <Outlet context={context} />
-      </SettingsProvider>
     </Container>
   );
 }

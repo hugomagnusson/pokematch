@@ -8,7 +8,7 @@ export function SettingsProvider({ children }) {
   console.log("stored gens " + JSON.stringify(storedGens));
 
   const [gens, setGens] = useState(
-    storedGens
+    !storedGens.minGen && !storedGens.maxGen
       ? { minGen: storedGens.minGen, maxGen: storedGens.maxGen }
       : { minGen: 1, maxGen: 8 }
   );

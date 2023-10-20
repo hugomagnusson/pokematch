@@ -33,7 +33,7 @@ function Profile() {
           <p>Height: {pokemon.getHeightString()}</p>
           <p>Weight: {pokemon.getWeightString()}</p>
           <p>Catch Rate: {pokemon.getCaptureRateString()}</p>
-          <p>Match Chance: {pokemon.getMatchChanceString()}</p>
+          <p>Generation: {pokemon.generation}</p>
         </Card.Text>
       </Card.Body>
     </Card>
