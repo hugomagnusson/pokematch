@@ -54,11 +54,6 @@ function NavBar() {
     <Nav variant="tabs">
       <Nav.Item>
         <NavLink className="nav-link" to="/">
-          Home
-        </NavLink>
-      </Nav.Item>
-      <Nav.Item>
-        <NavLink className="nav-link" to="/swipe">
           Swipe
         </NavLink>
       </Nav.Item>

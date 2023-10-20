@@ -14,10 +14,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Index />,
-      },
-      {
-        path: "/swipe",
         element: <Swipe />,
       },
       {
