@@ -4,6 +4,7 @@ import ErrorPage from "./error";
 import Index from "./index.js";
 import Match from "./Match"
 import Profile from "./Profile"
+import Settings from "./Settings";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         path: "/profile/:uuid",
         element: <Profile />,
       },
+      {
+        path: "/settings",
+        element: <Settings />
+      }
     ],
   },
 ]);

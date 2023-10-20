@@ -1,7 +1,8 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { useState } from "react";
+import { useState, createContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { SettingsProvider } from "./SettingsProvider.js";
 
 function App() {
   const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
@@ -13,10 +14,13 @@ function App() {
   return (
     <div className="container py-4">
       <NavBar />
-      <Outlet context={context} />
+      <SettingsProvider>
+        <Outlet context={context} />
+      </SettingsProvider>
     </div>
   );
 }
+
 
 function NavBar() {
   return (
@@ -29,6 +33,11 @@ function NavBar() {
       <li className="nav-item">
         <NavLink className="nav-link" to="/match">
           Match
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to="/settings">
+          Settings
         </NavLink>
       </li>
     </ul>
@@ -53,7 +62,7 @@ const bulbasaur = {
 };
 
 const lileep = {
-  name: "Lileep",
+  name: "Lil Peep",
   img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png",
   desc: "Rock/Grass Type",
   level: 25,
