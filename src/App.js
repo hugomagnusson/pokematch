@@ -1,14 +1,33 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import useReactFontLoader from "react-font-loader";
+import { fetchPokemons } from "./apiHandler";
+import { randomIntList } from "./utils";
 import { SettingsProvider } from "./SettingsProvider.js";
 
 function App() {
-  const [pokemonList, setPokemonList] = useState([golduck, bulbasaur, lileep]);
+  useReactFontLoader({
+    url: "https://fonts.googleapis.com/css2?family=Erica+One&family=Shrikhand&display=swap",
+  });
+
+  const [pokemonList, setPokemonList] = useState([]);
+  const [matchList, setMatchList] = useState([]);
+
+  useEffect(() => {
+    if (pokemonList.length < 2) {
+      fetchPokemons(randomIntList(1, 1, 500)).then((list) => {
+        setPokemonList(list.concat(pokemonList));
+      });
+    }
+  }, [pokemonList]);
+
   const context = {
     pokemonList: pokemonList,
     setPokemonList: setPokemonList,
+    matchList: matchList,
+    setMatchList: setMatchList,
   };
 
   return (
@@ -31,8 +50,13 @@ function NavBar() {
         </NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/match">
-          Match
+        <NavLink className="nav-link" to="/swipe">
+          Swipe
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to="/matches">
+          Matches
         </NavLink>
       </li>
       <li className="nav-item">
@@ -43,30 +67,5 @@ function NavBar() {
     </ul>
   );
 }
-
-//Temp
-const golduck = {
-  name: "Golduck",
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png",
-  desc: "Water Type",
-  level: 32,
-  uuid: "golduck"
-};
-
-const bulbasaur = {
-  name: "Bulbasaur",
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-  desc: "Grass Type",
-  level: 5,
-  uuid: "bulbasaur"
-};
-
-const lileep = {
-  name: "Lil Peep",
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png",
-  desc: "Rock/Grass Type",
-  level: 25,
-  uuid: "lileep"
-};
 
 export default App;
