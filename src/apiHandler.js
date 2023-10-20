@@ -1,15 +1,20 @@
 import { Pokemon } from "./pokemon";
 
-async function fetchPokemons(ids) {
+async function fetchPokemons(ids, minGen, maxGen, oldSprites) {
   const list = [];
 
   return Promise.all(
     ids.map(async (id) => {
       const pokemon = safeFetchJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
       const species = safeFetchJson(
-        `https://pokeapi.co/api/v2/pokemon-species/${id}`
+        `https://pokeapi.co/api/v2/pokemon-species/${id}` //37 tecken innan 4
       );
-      list.push(new Pokemon(await pokemon, await species));
+      await Promise.all([pokemon, species]);
+      const gen = (await species).generation.url.charAt(37);
+      console.log("gen::: " + gen);
+      if (gen >= minGen && gen <= maxGen) {
+        list.push(new Pokemon(await pokemon, await species, oldSprites));
+      }
     })
   ).then(() => list);
 }

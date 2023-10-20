@@ -5,6 +5,7 @@ import Index from "./index.js";
 import Swipe from "./Swipe";
 import Profile from "./Profile";
 import Matches from "./Matches";
+import Settings from "./Settings";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         path: "/matches",
         element: <Matches />,
       },
+      {
+        path: "/settings",
+        element: <Settings />
+      }
     ],
   },
 ]);

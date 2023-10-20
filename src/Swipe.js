@@ -2,12 +2,15 @@ import React, { useState, useMemo, useRef } from "react";
 import { useOutletContext, NavLink } from "react-router-dom";
 import TinderCard from "react-tinder-card";
 import { FaTimes, FaHeart } from "react-icons/fa";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 function Swipe() {
   const context = useOutletContext();
   const pokemonList = context.pokemonList;
 
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [matchedPokemon, setMatchedPokemon] = useState("The Pokémon");
   const currentIndexRef = useRef(currentIndex);
   const [isMatch, setMatch] = useState(false);
   const canSwipe = currentIndex >= 0 && !isMatch;
@@ -37,6 +40,7 @@ function Swipe() {
       const newList = context.matchList.slice();
       newList.push(pokemon);
       context.setMatchList(newList);
+      setMatchedPokemon(pokemon.name);
       setMatch(true);
     }
 
@@ -57,7 +61,7 @@ function Swipe() {
   };
 
   return (
-    <div>
+    <>
       <h1 className="text-center font-erica-one mt-2">PokeMatch</h1>
       <div className="d-flex justify-content-center">
         {pokemonList.map((pokemon, index) => (
@@ -68,19 +72,20 @@ function Swipe() {
             onSwipe={() => updateCurrentIndex(-1)}
             onCardLeftScreen={(dir) => outOfFrame(dir, pokemon, index)}
           >
-            <Card pokemon={pokemon} />
+            <PokemonCard pokemon={pokemon} />
           </TinderCard>
         ))}
       </div>
-      {isMatch ? <MatchPopup setMatch={setMatch} /> : <></>}
+      {isMatch ? <MatchPopup setMatch={setMatch} matchName={matchedPokemon}/> : <></>}
+      {console.log(matchedPokemon)}
       <div className="fixed-bottom text-center">
-        <ButtonMenu swipe={swipe}/>
+        <ButtonMenu swipe={swipe} className="p-2"/>
       </div>
-    </div>
+    </>
   );
 }
 
-function Card({ pokemon }) {
+function PokemonCard({ pokemon }) {
   const cardStyle = {
     backgroundImage: "url('/img/background.png')",
     width: 18 + "rem",
@@ -96,8 +101,8 @@ function Card({ pokemon }) {
   };
 
   return (
-    <div className="card position-relative shadow" style={cardStyle}>
-      <div className="card-body" style={cardBodyStyle}>
+    <Card className="position-relative shadow" style={cardStyle}>
+      <Card.Body style={cardBodyStyle}>
         <NavLink className="nav-link" to={`/profile/${pokemon.uuid}`}>
           <h3 className="border-top border-dark m-0">
             <b>{pokemon.name}</b>
@@ -105,33 +110,33 @@ function Card({ pokemon }) {
         </NavLink>
         <p className="col-3 m-0 p-0">lvl {pokemon.level}</p>
         <p className="card-text">{pokemon.getTypeString()}</p>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 }
 
 function ButtonMenu({ swipe }) {
   return (
-    <div className="p-2">
-      <button
-        type="button"
-        className="btn btn-outline-danger m-2"
+    <>
+      <Button
+        variant="outline-danger"
+        className="m-2"
         onClick={() => swipe("left")}
       >
         <FaTimes />
-      </button>
-      <button
-        type="button"
-        className="btn btn-outline-success m-2"
+      </Button>
+      <Button
+        variant="outline-success"
+        className="m-2"
         onClick={() => swipe("right")}
       >
         <FaHeart />
-      </button>
-    </div>
+      </Button>
+    </>
   );
 }
 
-function MatchPopup({ setMatch }) {
+function MatchPopup({ setMatch, matchName }) {
   const style = {
     backgroundImage: "url('/img/pokeball.gif')",
     backgroundSize: "cover",
@@ -148,18 +153,15 @@ function MatchPopup({ setMatch }) {
       
       
       <div className="position-absolute text-end" style={style}>
-        <button
-          type="button"
-          className="btn btn-outline-dark btn-no-outline"
-          onClick={() => setMatch(false)}
-          style={{ outline: "none" }}
-        >
+        <Button variant="outline-dark" onClick={() => setMatch(false)}>
           <FaTimes />
-        </button>
-        
+        </Button>
         <h1 className="font-shrikhand text-center mb-5 pt-2 pb-3">Gotcha!</h1>
         <h3 className="font-erica-one text-center mt-5 pt-1 px-4">
           It's a Match
+        </h3>
+        <h3 className="font-erica-one text-center mt-5 pt-1 px-4">
+          {matchName} likes you too!
         </h3>
       </div>
     </div>
