@@ -3,12 +3,9 @@ import { randomInt, capitalize } from "./utils";
 
 class Pokemon {
   constructor(pokemon, species, oldSprites) {
-    console.log(pokemon["sprites"]["versions"]["generation-i"]["red-blue"]);
-    this.img = !oldSprites
-      ? pokemon["sprites"]["other"]["official-artwork"]["front_default"]
-      : pokemon["sprites"]["versions"]["generation-i"]["red-blue"][
-          "front_default"
-        ];
+    this.img = !oldSprites ? 
+      pokemon["sprites"]["other"]["official-artwork"]["front_default"] : 
+      pokemon["sprites"]["versions"]["generation-i"]["red-blue"]["front_default"];
     //https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/35.png
     this.name = capitalize(pokemon["name"]);
     this.number = pokemon["id"];
@@ -49,7 +46,6 @@ class Pokemon {
 
   isMatch() {
     const chance = randomInt(0, 255);
-    //console.log(chance, this.getMatchChance())
     return this.getMatchChance() - chance > 0;
   }
 

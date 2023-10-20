@@ -29,13 +29,7 @@ function Swipe() {
   };
 
   const outOfFrame = (dir, pokemon, idx) => {
-    console.log(
-      `${pokemon.name} (${idx}) was swiped to the ${dir}`,
-      currentIndexRef.current
-    );
-
     if (dir === "right" && pokemon.isMatch()) {
-      console.log(`It's a match: ${pokemon.name}`);
       const newList = context.matchList.slice();
       newList.push(pokemon);
       context.setMatchList(newList);
@@ -75,11 +69,7 @@ function Swipe() {
           </TinderCard>
         ))}
       </div>
-      {isMatch ? (
-        <MatchPopup setMatch={setMatch} matchName={matchedPokemon} />
-      ) : (
-        <></>
-      )}
+      {isMatch ? <MatchPopup setMatch={setMatch} matchName={matchedPokemon}/> : <></>}
       <div className="fixed-bottom text-center">
         <ButtonMenu swipe={swipe} className="p-2" />
       </div>
